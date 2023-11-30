@@ -35,7 +35,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Move the following code inside the d3.csv callback
-        const svg = d3.select('#playerStats');
+        const svg = d3.select('#playerStats')
+            .attr('width', 550)
+            .attr('height', 400);
+
         const circleRadius = 6;
 
         function createScatterPlot() {
