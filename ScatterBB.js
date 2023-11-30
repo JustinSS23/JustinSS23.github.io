@@ -8,17 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Convert CSV data to the desired format
         data.forEach((row) => {
             const playerName = row.Player;
-            const position = row.Pos; // Add position data
             const seasonStats = {
-                GP: +row.G,
                 points: +row.PTS,
-                REB: +row.TRB,
-                AST: +row.AST,
-                STL: +row.STL,
-                BLK: +row.BLK,
-                FGM: +row.FG,
-                FTM: +row.FT,
-                TOV: +row.TOV,
             };
 
             const playerIndex = players.findIndex(player => player.name === playerName);
@@ -28,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 players.push({
                     name: playerName,
-                    position: position, // Add position data
                     seasons: [seasonStats],
                 });
             }
@@ -49,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .range([60, 500]);
 
             const yScale = d3.scaleLinear()
-                .domain([0, d3.max(players, d => d3.max(d.seasons, s => s.GP))])
+                .domain([0, players.length])
                 .range([350, 60]);
 
             svg.selectAll('circle')
@@ -57,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .enter()
                 .append('circle')
                 .attr('cx', d => xScale(d3.max(d.seasons, s => s.points)))
-                .attr('cy', d => yScale(d3.max(d.seasons, s => s.GP)))
+                .attr('cy', (d, i) => yScale(i))
                 .attr('r', circleRadius)
                 .attr('fill', 'black')
                 .attr('stroke', 'white')
