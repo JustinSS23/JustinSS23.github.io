@@ -6,14 +6,35 @@ document.addEventListener('DOMContentLoaded', function () {
             // Convert CSV to array of objects
             const players = CSVtoJSON(data);
 
-            // Generate table rows
-            const tableBody = document.querySelector('#playersTable tbody');
-            players.forEach(player => {
-                const row = tableBody.insertRow();
-                const cell1 = row.insertCell(0);
-                const cell2 = row.insertCell(1);
-                cell1.textContent = player.Player;
-                cell2.textContent = player.Points;
+            // Extract player names and points for the scatter plot
+            const playerNames = players.map(player => player.Player);
+            const playerPoints = players.map(player => parseFloat(player.Points));
+
+            // Create scatter plot
+            const ctx = document.getElementById('scatterPlot').getContext('2d');
+            new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    labels: playerNames,
+                    datasets: [{
+                        label: 'NBA Player Points',
+                        data: playerPoints,
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom'
+                        },
+                        y: {
+                            min: 0
+                        }
+                    }
+                }
             });
         })
         .catch(error => console.error('Error fetching the CSV file:', error));
