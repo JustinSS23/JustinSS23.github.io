@@ -6,20 +6,19 @@ document.addEventListener('DOMContentLoaded', function () {
             // Convert CSV to array of objects
             const players = CSVtoJSON(data);
 
-            // Extract player names and points for the scatter plot
-            const scatterData = players.map(player => ({
-                x: player.Player,
-                y: parseFloat(player.Points)
-            }));
+            // Extract player names and points for the bar chart
+            const playerNames = players.map(player => player.Player);
+            const points = players.map(player => parseFloat(player.Points));
 
-            // Create scatter plot
-            const ctx = document.getElementById('scatterPlot').getContext('2d');
+            // Create bar chart
+            const ctx = document.getElementById('barChart').getContext('2d');
             new Chart(ctx, {
-                type: 'scatter',
+                type: 'bar',
                 data: {
+                    labels: playerNames,
                     datasets: [{
                         label: 'NBA Player Points',
-                        data: scatterData,
+                        data: points,
                         backgroundColor: 'rgba(75, 192, 192, 0.5)',
                         borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
@@ -27,12 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 options: {
                     scales: {
-                        x: {
-                            type: 'linear',
-                            position: 'bottom'
-                        },
                         y: {
-                            min: 0
+                            beginAtZero: true
                         }
                     }
                 }
