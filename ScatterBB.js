@@ -1,4 +1,4 @@
-// script.js
+// ScatterBB.js
 
 // Wait for the DOM to be ready before executing the script
 document.addEventListener('DOMContentLoaded', function () {
@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
+        // Move the following code inside the d3.csv callback
         const svg = d3.select('#playerStats');
         const circleRadius = 6;
 
@@ -69,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
             function showTooltip(event, player) {
                 const tooltip = d3.select('body').append('div')
                     .attr('class', 'tooltip')
-                    .style('top', event.clientY - 30 + 'px')  // Adjust tooltip position
+                    .style('top', event.clientY - 30 + 'px')
                     .style('left', event.clientX + 10 + 'px');
                 tooltip.append('div')
                     .attr('class', 'tooltiptext')
