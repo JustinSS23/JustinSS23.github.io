@@ -7,18 +7,19 @@ document.addEventListener('DOMContentLoaded', function () {
             const players = CSVtoJSON(data);
 
             // Extract player names and points for the scatter plot
-            const playerNames = players.map(player => player.Player);
-            const playerPoints = players.map(player => parseFloat(player.Points));
+            const scatterData = players.map(player => ({
+                x: player.Player,
+                y: parseFloat(player.Points)
+            }));
 
             // Create scatter plot
             const ctx = document.getElementById('scatterPlot').getContext('2d');
             new Chart(ctx, {
                 type: 'scatter',
                 data: {
-                    labels: playerNames,
                     datasets: [{
                         label: 'NBA Player Points',
-                        data: playerPoints,
+                        data: scatterData,
                         backgroundColor: 'rgba(75, 192, 192, 0.5)',
                         borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
