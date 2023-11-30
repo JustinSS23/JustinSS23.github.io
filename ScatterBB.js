@@ -1,80 +1,40 @@
-// ScatterBB.js
-
-// Wait for the DOM to be ready before executing the script
 document.addEventListener('DOMContentLoaded', function () {
-    const players = [];
+    // Fetch the CSV file
+    fetch('data.csv')
+        .then(response => response.text())
+        .then(data => {
+            // Convert CSV to array of objects
+            const players = CSVtoJSON(data);
 
-    d3.csv('NBA_Player_Stats.csv').then((data) => {
-        // Convert CSV data to the desired format
-        data.forEach((row) => {
-            const playerName = row.Player;
-            const seasonStats = {
-                points: +row.PTS,
-            };
+            // Generate table rows
+            const tableBody = document.querySelector('#playersTable tbody');
+            players.forEach(player => {
+                const row = tableBody.insertRow();
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+                cell1.textContent = player.Player;
+                cell2.textContent = player.Points;
+            });
+        })
+        .catch(error => console.error('Error fetching the CSV file:', error));
 
-            const playerIndex = players.findIndex(player => player.name === playerName);
+    // Function to convert CSV to JSON
+    function CSVtoJSON(csv) {
+        const lines = csv.split('\n');
+        const result = [];
+        const headers = lines[0].split(',');
 
-            if (playerIndex !== -1) {
-                players[playerIndex].seasons.push(seasonStats);
-            } else {
-                players.push({
-                    name: playerName,
-                    seasons: [seasonStats],
-                });
-            }
-        });
+        for (let i = 1; i < lines.length; i++) {
+            const obj = {};
+            const currentline = lines[i].split(',');
 
-        // Move the following code inside the d3.csv callback
-        const svg = d3.select('#playerStats')
-            .attr('width', 550)
-            .attr('height', 400);
-
-        const circleRadius = 6;
-
-        function createScatterPlot() {
-            svg.selectAll('*').remove();
-
-            const xScale = d3.scaleLinear()
-                .domain([0, d3.max(players, d => d3.max(d.seasons, s => s.points))])
-                .range([60, 500]);
-
-            const yScale = d3.scaleLinear()
-                .domain([0, players.length])
-                .range([350, 60]);
-
-            svg.selectAll('circle')
-                .data(players)
-                .enter()
-                .append('circle')
-                .attr('cx', d => xScale(d3.max(d.seasons, s => s.points)))
-                .attr('cy', (d, i) => yScale(i))
-                .attr('r', circleRadius)
-                .attr('fill', 'black')
-                .attr('stroke', 'white')
-                .on('mouseover', function (event, d) {
-                    d3.select(this).attr('fill', 'orange');
-                    showTooltip(event, d);
-                })
-                .on('mouseout', function () {
-                    d3.select(this).attr('fill', 'black');
-                    hideTooltip();
-                });
-
-            function showTooltip(event, player) {
-                const tooltip = d3.select('body').append('div')
-                    .attr('class', 'tooltip')
-                    .style('top', event.clientY - 30 + 'px')
-                    .style('left', event.clientX + 10 + 'px');
-                tooltip.append('div')
-                    .attr('class', 'tooltiptext')
-                    .html(`${player.name}: ${d3.max(player.seasons, s => s.points)} points`);
+            for (let j = 0; j < headers.length; j++) {
+                obj[headers[j]] = currentline[j];
             }
 
-            function hideTooltip() {
-                svg.selectAll('.tooltip').remove();
-            }
+            result.push(obj);
         }
 
-        createScatterPlot();
-    });
+        return result;
+    }
 });
