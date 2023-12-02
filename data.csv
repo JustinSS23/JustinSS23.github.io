@@ -1,26 +1,27 @@
-Player,Points
-Karl-Anthony Towns,37
-Stephen Curry,34.2
-Luka Dončić,33.2
-Giannis Antetokounmpo,32.7
-Joel Embiid,31.7
-Kevin Durant,29.3
-Bradley Beal,29.2
-LeBron James,29
-Nikola Jokić,26.4
-Trae Young,25.3
-Devin Booker,25.1
-James Harden,25
-Zach LaVine,24.1
-Ja Morant,24
-Malcolm Brogdon,21.2
-Fred VanVleet,20.2
-DeMar DeRozan,19.7
-CJ McCollum,19.5
-Chris Duarte,19.4
-De'Aaron Fox,19.3
-Norman Powell,19
-Khris Middleton,18.8
-Terry Rozier,18.7
-Shai Gilgeous-Alexander,18.6
-Kyle Lowry,17.4
+Player,Points,GP,EFF
+
+Trae Young, 2155, 76, 2066
+DeMar DeRozan, 2118, 76, 1961
+Joel Embiid, 2079, 68, 2304
+Jayson Tatum, 2046, 76, 1971
+Nikola Jokic, 2004, 74, 2862
+Giannis Antetokounmpo, 2002, 67, 2343
+Luka Doncic, 1847, 65, 1940
+Devin Booker, 1822, 68, 1627
+Karl-Anthony Towns, 1818, 74, 2088
+Donovan Mitchell, 1733, 67, 1479
+Lebron James, 1695, 56, 1776
+Kevin Durant, 1643, 55, 1736
+Zach LaVine, 1635, 67, 1463
+Stephen Curry, 1630, 64, 1559
+Miles Bridges, 1613, 80, 1779
+Ja Morant, 1564, 57, 1469
+Jaylen Brown, 1559, 66, 1386
+Pascal Siakam, 1551, 68, 1731
+Anthony Edwards, 1533, 72, 1356
+LaMelo Ball, 1508, 75, 1737
+Daris Garland, 1473, 68, 1471
+Julius Randle, 1447, 72, 1548
+Russell Westbrook, 1441, 78, 1553
+Dejounte Murray, 1438, 68, 1890
+James Harden, 1432, 65, 1782
