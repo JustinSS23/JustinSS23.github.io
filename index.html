@@ -5,13 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NBA Players Points</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        body {
+            text-align: center; /* Center-align the text within the body */
+        }
+
+        h1 {
+            margin: 0; /* Remove default margin for the h1 element */
+            padding: 20px; /* Add some padding for spacing */
+        }
+
+        #chartContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 620px; /* Adjust the width as needed */
+            margin: auto; /* Center the container */
+        }
+    </style>
 </head>
 <body>
     <h1>Top 25 NBA Players 2021-2022</h1>
-    
-    <!-- Use canvas elements for charts -->
-    <canvas id="barChart" width="200" height="200"></canvas>
-    <canvas id="scatterChart" width="250" height="250"></canvas>
+    <div id="chartContainer">
+        <canvas id="barChart"></canvas>
+        <canvas id="scatterChart"></canvas>
+        <canvas id="perHistogram"></canvas>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
