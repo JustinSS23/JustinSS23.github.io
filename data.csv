@@ -1,16 +1,15 @@
-Player,Points,GP,EFF
-
-Trae Young, 2155, 76, 2066
-DeMar DeRozan, 2118, 76, 1961
-Joel Embiid, 2079, 68, 2304
-Jayson Tatum, 2046, 76, 1971
-Nikola Jokic, 2004, 74, 2862
-Giannis Antetokounmpo, 2002, 67, 2343
-Luka Doncic, 1847, 65, 1940
-Devin Booker, 1822, 68, 1627
-Karl-Anthony Towns, 1818, 74, 2088
-Donovan Mitchell, 1733, 67, 1479
-Lebron James, 1695, 56, 1776
+Player,Points,GP,EFF,PER
+Trae Young, 2155, 76, 2066, 27.2
+DeMar DeRozan, 2118, 76, 1961, 25.8
+Joel Embiid, 2079, 68, 2304, 33.9
+Jayson Tatum, 2046, 76, 1971, 25.9
+Nikola Jokic, 2004, 74, 2862, 38.7
+Giannis Antetokounmpo, 2002, 67, 2343, 35.0
+Luka Doncic, 1847, 65, 1940, 29.8
+Devin Booker, 1822, 68, 1627, 23.9
+Karl-Anthony Towns, 1818, 74, 2088, 28.2
+Donovan Mitchell, 1733, 67, 1479, 22.1
+Lebron James, 1695, 56, 1776, 26.2
 Kevin Durant, 1643, 55, 1736
 Zach LaVine, 1635, 67, 1463
 Stephen Curry, 1630, 64, 1559
