@@ -8,25 +8,31 @@
     
     <style>
         body {
-            text-align: center; /* Center-align the text within the body */
+            text-align: center;
         }
 
         h1 {
-            margin: 0; /* Remove default margin for the h1 element */
-            padding: 20px; /* Add some padding for spacing */
+            margin: 0;
+            padding: 20px;
         }
 
         #chartContainer {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
-            width: 620px; /* Adjust the width as needed */
-            margin: auto; /* Center the container */
+            width: 620px;
+            margin: auto;
         }
     </style>
 </head>
 <body>
-    <h1>Top 25 NBA Players 2021-2022</h1>
+    <h1>Top NBA Players</h1>
+    <div>
+        <button data-csv="21-22.csv">2021-2022 Season</button>
+        <button data-csv="20-21.csv">2020-2021 Season</button>
+        <button data-csv="19-20.csv">2019-2020 Season</button>
+        <button data-csv="18-19.csv">2018-2019 Season</button>
+    </div>
     <div id="chartContainer">
         <canvas id="barChart"></canvas>
         <canvas id="scatterChart"></canvas>
