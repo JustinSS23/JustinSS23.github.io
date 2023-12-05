@@ -3,43 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NBA Players Points</title>
-    <link rel="stylesheet" href="styles.css">
-    
-    <style>
-        body {
-            text-align: center;
-        }
-
-        h1 {
-            margin: 0;
-            padding: 20px;
-        }
-
-        #chartContainer {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            width: 620px;
-            margin: auto;
-        }
-    </style>
+    <title>NBA Player Stats</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
 </head>
 <body>
-    <h1>Top NBA Players</h1>
-    <div>
-        <button data-csv="21-22.csv">2021-2022 Season</button>
-        <button data-csv="20-21.csv">2020-2021 Season</button>
-        <button data-csv="19-20.csv">2019-2020 Season</button>
-        <button data-csv="18-19.csv">2018-2019 Season</button>
-    </div>
-    <div id="chartContainer">
-        <canvas id="barChart"></canvas>
-        <canvas id="scatterChart"></canvas>
-        <canvas id="perHistogram"></canvas>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
+<h1>NBA Player Stats</h1>
+
+<div>
+    <label for="seasonSelect">Select Season:</label>
+    <select id="seasonSelect" onchange="updateGraphs()">
+        <option value="21-22.csv">2018-2019</option>
+        <option value="19-20.csv">2019-2020</option>
+        <option value="20-21.csv">2020-2021</option>
+        <option value="21-22.csv">2021-2022</option>
+    </select>
+</div>
+
+<div id="pointsGraph"></div>
+<div id="astTovGraph"></div>
+<div id="efficiencyGraph"></div>
+<div id="fgmGraph"></div>
+<div id="pointsVsEfficiencyGraph"></div>
+    <script>
+        function updateGraphs() {
+            var selectedSeason = document.getElementById("seasonSelect").value;
+            // Use selectedSeason to load the corresponding CSV file and update the graphs
+            d3.csv(selectedSeason + ".csv").then(function(data) {
+                // Call functions to update each graph with the loaded data
+                updatePointsGraph(data);
+                updateAstTovGraph(data);
+                updateEfficiencyGraph(data);
+                updateFgmGraph(data);
+                updatePointsVsEfficiencyGraph(data);
+            });
+        }
+    
+        // Function to update the Points Graph (Bar Chart)
+        function updatePointsGraph(data) {
+            // Select the pointsGraph container
+            var pointsGraph = d3.select("#pointsGraph");
+    
+            // Set the width and height of the graph
+            var width = 600;
+            var height = 400;
+    
+            // Create scales for x and y axes
+            var xScale = d3.scaleBand().domain(data.map(d => d.Player)).range([0, width]).padding(0.1);
+            var yScale = d3.scaleLinear().domain([0, d3.max(data, d => +d.Points)]).range([height, 0]);
+    
+            // Create SVG element and append it to the container
+            var svg = pointsGraph.selectAll("svg").data([null]).enter().append("svg").attr("width", width).attr("height", height);
+    
+            // Create bars for each player
+            svg.selectAll("rect")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("x", d => xScale(d.Player))
+                .attr("y", d => yScale(+d.Points))
+                .attr("width", xScale.bandwidth())
+                .attr("height", d => height - yScale(+d.Points))
+                .attr("fill", "steelblue")
+                .on("mouseover", function (event, d) {
+                    alert(d.Player + ": " + d.Points + " points");
+                });
+        }
+    
+        // Function to update the AST/TOV Graph (Scatter Plot)
+        function updateAstTovGraph(data) {
+            // Select the astTovGraph container
+            var astTovGraph = d3.select("#astTovGraph");
+    
+            // Set the width and height of the graph
+            var width = 600;
+            var height = 400;
+    
+            // Create scales for x and y axes
+            var xScale = d3.scaleLinear().domain([0, d3.max(data, d => +d.AST_TOV)]).range([0, width]);
+            var yScale = d3.scaleLinear().domain([0, d3.max(data, d => +d.Points)]).range([height, 0]);
+    
+            // Create SVG element and append it to the container
+            var svg = astTovGraph.selectAll("svg").data([null]).enter().append("svg").attr("width", width).attr("height", height);
+    
+            // Create circles for each player
+            svg.selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("cx", d => xScale(+d.AST_TOV))
+                .attr("cy", d => yScale(+d.Points))
+                .attr("r", 5)
+                .attr("fill", "steelblue")
+                .on("mouseover", function (event, d) {
+                    // Display player name and AST/TOV on hover
+                    alert(d.Player + ": AST/TOV - " + d.AST_TOV);
+                });
+        }
+    
+        // Function to update the Efficiency Graph (Bar Chart)
+        function updateEfficiencyGraph(data) {
+            // Select the efficiencyGraph container
+            var efficiencyGraph = d3.select("#efficiencyGraph");
+    
+            // Set the width and height of the graph
+            var width = 600;
+            var height = 400;
+    
+            // Create scales for x and y axes
+            var xScale = d3.scaleBand().domain(data.map(d => d.Player)).range([0, width]).padding(0.1);
+            var yScale = d3.scaleLinear().domain([0, d3.max(data, d => +d.Efficiency)]).range([height, 0]);
+    
+            // Create SVG element and append it to the container
+            var svg = efficiencyGraph.selectAll("svg").data([null]).enter().append("svg").attr("width", width).attr("height", height);
+    
+            // Create bars for each player
+            svg.selectAll("rect")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("x", d => xScale(d.Player))
+                .attr("y", d => yScale(+d.Efficiency))
+                .attr("width", xScale.bandwidth())
+                .attr("height", d => height - yScale(+d.Efficiency))
+                .attr("fill", "steelblue")
+                .on("mouseover", function (event, d) {
+                    // Display player name and efficiency on hover
+                    alert(d.Player + ": Efficiency - " + d.Efficiency);
+                });
+        }
+    
+        // Function to update the FGM Graph (Scatter Plot)
+        function updateFgmGraph(data) {
+            // Select the fgmGraph container
+            var fgmGraph = d3.select("#fgmGraph");
+    
+            // Set the width and height of the graph
+            var width = 600;
+            var height = 400;
+    
+            // Create scales for x and y axes
+            var xScale = d3.scaleLinear().domain([0, d3.max(data, d => +d.AST_TOV)]).range([0, width]);
+            var yScale = d3.scaleLinear().domain([0, d3.max(data, d => +d.Points)]).range([height, 0]);
+    
+            // Create SVG element and append it to the container
+            var svg = fgmGraph.selectAll("svg").data([null]).enter().append("svg").attr("width", width).attr("height", height);
+    
+            // Create circles for each player
+            svg.selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("cx", d => xScale(+d.AST_TOV))
+                .attr("cy", d => yScale(+d.Points))
+                .attr("r", 5)
+                .attr("fill", "steelblue")
+                .on("mouseover", function (event, d) {
+                    // Display player name and AST/TOV on hover
+                    alert(d.Player + ": AST/TOV - " + d.AST_TOV);
+                });
+        }
+    
+        // Function to update the Points vs. Efficiency Graph (Scatter Plot)
+        function updatePointsVsEfficiencyGraph(data) {
+            // Select the pointsVsEfficiencyGraph container
+            var pointsVsEfficiencyGraph = d3.select("#pointsVsEfficiencyGraph");
+    
+            // Set the width and height of the graph
+            var width = 600;
+            var height = 400;
+    
+            // Create scales for x and y axes
+            var xScale = d3.scaleLinear().domain([0, d3.max(data, d => +d.Points)]).range([0, width]);
+            var yScale = d3.scaleLinear().domain([0, d3.max(data, d => +d.Efficiency)]).range([height, 0]);
+    
+            // Create SVG element and append it to the container
+            var svg = pointsVsEfficiencyGraph.selectAll("svg").data([null]).enter().append("svg").attr("width", width).attr("height", height);
+    
+            // Create circles for each player
+            svg.selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("cx", d => xScale(+d.Points))
+                .attr("cy", d => yScale(+d.Efficiency))
+                .attr("r", 5)
+                .attr("fill", "steelblue")
+                .on("mouseover", function (event, d) {
+                    // Display player name, points, and efficiency on hover
+                    alert(d.Player + ": Points - " + d.Points + ", Efficiency - " + d.Efficiency);
+                });
+        }
+    </script>
+    
 </body>
 </html>
