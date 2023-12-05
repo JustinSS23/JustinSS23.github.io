@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NBA Player Stats</title>
+    <style>
+        /* Add styles for the graph containers */
+        .graph-container {
+            background-color: #f5f5f5; /* Light gray background */
+            margin-bottom: 20px; /* Add some spacing between graphs */
+            padding: 20px; /* Add padding for better visibility */
+        }
+    </style>
     <script src="https://d3js.org/d3.v6.min.js"></script>
 </head>
 <body>
@@ -20,11 +28,12 @@
     </select>
 </div>
 
-<div id="pointsGraph"></div>
-<div id="astTovGraph"></div>
-<div id="efficiencyGraph"></div>
-<div id="fgmGraph"></div>
-<div id="pointsVsEfficiencyGraph"></div>
+<!-- Add a class to each graph container for styling -->
+<div id="pointsGraph" class="graph-container"></div>
+<div id="astTovGraph" class="graph-container"></div>
+<div id="efficiencyGraph" class="graph-container"></div>
+<div id="fgmGraph" class="graph-container"></div>
+<div id="pointsVsEfficiencyGraph" class="graph-container"></div>
 
 <script>
     function updateGraphs() {
@@ -203,5 +212,6 @@
             });
     }
 </script>
+
 </body>
 </html>
