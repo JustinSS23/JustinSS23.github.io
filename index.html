@@ -97,7 +97,7 @@
         var height = 400;
 
         // Create scales for x and y axes
-        var xScale = d3.scaleLinear().domain([0, d3.max(data, d => +d.ASTTOV)]).range([0, width]);
+        var xScale = d3.scaleLinear().domain([0, d3.max(data, d => +d.ASTTOV) + 1]).range([0, width]);
         var yScale = d3.scaleLinear().domain([0, d3.max(data, d => +d.PTS)]).range([height, 0]);
 
         // Create SVG element and append it to the container
