@@ -105,18 +105,37 @@
 
         // Create circles for each player
         svg.selectAll("circle")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("cx", d => xScale(+d.ASTTOV))
-            .attr("cy", d => yScale(+d.PTS))
-            .attr("r", 5)
-            .attr("fill", "steelblue")
-            .on("mouseover", function (event, d) {
-                // Display player name and AST/TOV on hover
-                alert(d.Player + ": AST/TOV - " + d.ASTTOV);
-            });
-    }
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx", d => xScale(+d.ASTTOV))
+        .attr("cy", d => yScale(+d.PTS))
+        .attr("r", 5)
+        .attr("fill", "steelblue")
+        .on("mouseover", function (event, d) {
+            showTooltip(d.Player + ": AST/TOV - " + d.ASTTOV, event.pageX, event.pageY);
+        })
+        .on("mouseout", function () {
+            hideTooltip();
+        });
+}
+
+// Function to show tooltip
+function showTooltip(content, x, y) {
+    var tooltip = d3.select("#tooltip");
+
+    tooltip.html(content)
+        .style("left", x + "px")
+        .style("top", y + "px")
+        .style("display", "block");
+}
+
+// Function to hide tooltip
+function hideTooltip() {
+    var tooltip = d3.select("#tooltip");
+
+    tooltip.style("display", "none");
+}
 
     // Function to update the Efficiency Graph (Bar Chart)
     function updateEfficiencyGraph(data) {
