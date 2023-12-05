@@ -31,6 +31,13 @@
         var selectedSeason = document.getElementById("seasonSelect").value;
         // Use selectedSeason to load the corresponding CSV file and update the graphs
         d3.csv(selectedSeason + ".csv").then(function(data) {
+            console.log(data); // Check if data is loaded correctly
+            data.forEach(function(d) {
+                d.PTS = +d.PTS; // Convert to numeric if needed
+                d.ASTTOV = +d.ASTTOV; // Convert to numeric if needed
+                d.EFF = +d.EFF; // Convert to numeric if needed
+                // Add similar conversions for other columns if necessary
+            });
             // Call functions to update each graph with the loaded data
             updatePointsGraph(data);
             updateAstTovGraph(data);
@@ -196,6 +203,5 @@
             });
     }
 </script>
-
 </body>
 </html>
